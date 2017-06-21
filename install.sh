@@ -3,10 +3,6 @@
 # 
 ######################################
 
-# variable config
-NGINX-DIR="${PWD}/config/nginx"
-PHP-FPM-DIR="${PWD}/config/php-fpm/"
-
 # root check
 [ $(id -u) != "0" ] && { echo "${CFAILURE}Error: You must be root to run this script${CEND}"; exit 1; }
 
@@ -23,7 +19,7 @@ echo ""
 
 # install php
 apt-get install python-software-properties -y
-add-apt-repository ppa:ondrej/php
+add-apt-repository ppa:ondrej/php -y
 apt-get update -y
 apt-get -y install  php5.6-mysql php5.6-cli php5.6-curl php5.6-json php5.6-sqlite3 php5.6-mcrypt php5.6-curl php-xdebug php5.6-mbstring  mysql-server-5.7 php5.6-fpm
 echo "...................................................installed PHP"
@@ -40,8 +36,8 @@ echo ""
 echo "Setup nginx........"
 echo "Move nginx.conf"
 mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf-bak
-cp -rvf $NGINX-DIR/nginx.conf /etc/nginx/
-cp -rvf $NGINX-DIR/sites-available/*.conf /etc/nginx/sites-available/*
+cp -rvf config/nginx/nginx.conf /etc/nginx/
+cp -rvf config/nginx/sites-available/*.conf /etc/nginx/sites-available/*
 
 
 # symlink config
