@@ -28,7 +28,7 @@ echo ""
 apt-get install python-software-properties -y
 add-apt-repository ppa:ondrej/php -y
 apt-get update -y
-apt-get -y install  php5.6-mysql php5.6-cli php5.6-curl php5.6-json php5.6-sqlite3 php5.6-mcrypt php5.6-curl php-xdebug php5.6-mbstring  mysql-server-5.7 php5.6-fpm
+apt-get -y install  php5.6-mysql php5.6-cli php5.6-curl php5.6-json php5.6-xml php5.6-sqlite3 php5.6-mcrypt php5.6-curl php-xdebug php5.6-mbstring  mysql-server-5.7 php5.6-fpm
 echo "...................................................installed PHP"
 sleep 2
 echo ""
@@ -83,9 +83,11 @@ sleep 2
 # composer update 
 echo "Composer update for all apps"
 echo "composer update frontend"
-cd $docroot/frontend && composer update
+cd $docroot/frontend && composer install && composer update
 echo "........................................................ composer update frontend done"
 echo ""
+cd $docroot/api && composer install && composer update
+echo "........................................................ composer update api done"
 sleep 2
 
 # setup php-fpm
@@ -112,4 +114,6 @@ sleep 2
 # restart service
 /etc/init.d/nginx restart
 /etc/init.d/php5.6-fpm restart
+/etc/init.d/mysql restart
+
 
