@@ -89,6 +89,8 @@ echo ""
 sleep 2
 
 # setup php-fpm
+
+cd /root/laravel-install
 echo "Setup PHP-FPM"
 echo ""
 mv /etc/php/5.6/fpm/pool.d/www.conf ~
