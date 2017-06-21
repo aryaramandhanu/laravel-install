@@ -3,6 +3,13 @@
 # 
 ######################################
 
+# git apps
+frontend="git@bitbucket.org:kanisake/garudabiru-www-frontend.git"
+backend="git@bitbucket.org:kanisake/garudabiru-www-backend.git"
+api="git@bitbucket.org:kanisake/garudabiru-www-backend.git"
+docroot="/usr/share/nginx/"
+root="/root/"
+
 # root check
 [ $(id -u) != "0" ] && { echo "${CFAILURE}Error: You must be root to run this script${CEND}"; exit 1; }
 
@@ -36,8 +43,11 @@ echo ""
 echo "Setup nginx........"
 echo "Move nginx.conf"
 mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf-bak
+echo "...done"
+sleep 2
+
 cp -rvf config/nginx/nginx.conf /etc/nginx/
-cp -rvf config/nginx/sites-available/*.conf /etc/nginx/sites-available/*
+cp -rvf config/nginx/sites-available/*.conf /etc/nginx/sites-available/
 
 
 # symlink config
@@ -48,3 +58,40 @@ echo ""
 # check nginx
 echo "check nginx.........."
 nginx -t
+
+# setup application
+echo "clone all repo to document root"
+echo ""
+
+git clone $frontend $docroot/frontend
+git clone $backend $docroot/backend
+git clone $api $docroot/api
+echo "clone done...."
+sleep 2
+
+# install composer
+echo "instaling composer"
+cd $root
+curl -sS https://getcomposer.org/installer | php
+mv composer.phar /usr/local/bin/composer
+cd $root/laravel-install
+echo "Composer install done"
+sleep 2
+
+# setup php-fpm
+echo "Setup PHP-FPM"
+echo ""
+mv /etc/php/5.6/fpm/pool.d/www.conf ~
+cp -rvf config/php-fpm/* /etc/php/5.6/fpm/pool.d/
+
+# config php
+echo "config php with php-fpm"
+sed -i "s/error_reporting = .*/error_reporting = E_ALL \& ~E_NOTICE \& ~E_STRICT \& ~E_DEPRECATED/" /etc/php/5.6/fpm/php.ini
+sed -i "s/display_errors = .*/display_errors = Off/" /etc/php/5.6/fpm/php.ini
+sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/5.6/fpm/php.ini
+sed -i "s/memory_limit = .*/memory_limit = 512M/" /etc/php/5.6/fpm/php.ini
+sed -i "s/upload_max_filesize = .*/upload_max_filesize = 50M/" /etc/php/5.6/fpm/php.ini
+sed -i "s/post_max_size = .*/post_max_size = 50M/" /etc/php/5.6/fpm/php.ini
+echo "........................................config php.ini done"
+echo ""
+sleep 2
