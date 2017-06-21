@@ -4,8 +4,8 @@
 ######################################
 
 # variable config
-NGINX-DIR="nginx/"
-PHP-FPM-DIR="php-fpm/"
+NGINX-DIR="${PWD}/config/nginx"
+PHP-FPM-DIR="${PWD}/config/php-fpm/"
 
 # root check
 [ $(id -u) != "0" ] && { echo "${CFAILURE}Error: You must be root to run this script${CEND}"; exit 1; }
