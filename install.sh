@@ -4,15 +4,15 @@
 
 # update the sources
 sudo apt update
-echo "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::updated apt repos"
+echo "................updated apt repos"
 sleep 2
 
 # install zip & git
 sudo apt -y install zip git
-echo "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::installed GIT"
+echo "................installed git"
 sleep 2
 
 # install nginx
 sudo apt -y install nginx
-echo "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::installed NGINX"
+echo "................installed NGINX"
 sleep 2
