@@ -7,7 +7,7 @@
 frontend="git@bitbucket.org:kanisake/garudabiru-www-frontend.git"
 backend="git@bitbucket.org:kanisake/garudabiru-www-backend.git"
 api="git@bitbucket.org:kanisake/garudabiru-www-backend.git"
-docroot="/usr/share/nginx/"
+docroot="/usr/share/nginx"
 root="/root/"
 
 # root check
