@@ -41,8 +41,8 @@ cp -rvf config/nginx/sites-available/*.conf /etc/nginx/sites-available/*
 
 
 # symlink config
-unlink /etc/nginx/sites-enable/default
-ln -s /etc/nginx/sites-available/* /etc/nginx/sites-enable/
+unlink /etc/nginx/sites-enabled/default
+ln -s /etc/nginx/sites-available/* /etc/nginx/sites-enabled/
 echo ""
 
 # check nginx
