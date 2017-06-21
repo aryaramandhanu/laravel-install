@@ -64,7 +64,9 @@ echo "clone all repo to document root"
 echo ""
 
 git clone $frontend $docroot/frontend
+echo ""
 git clone $backend $docroot/backend
+echo ""
 git clone $api $docroot/api
 echo "clone done...."
 sleep 2
@@ -78,11 +80,20 @@ cd $root/laravel-install
 echo "Composer install done"
 sleep 2
 
+# composer update 
+echo "Composer update for all apps"
+echo "composer update frontend"
+cd $docroot/frontend && composer update
+echo "........................................................ composer update frontend done"
+echo ""
+sleep 2
+
 # setup php-fpm
 echo "Setup PHP-FPM"
 echo ""
 mv /etc/php/5.6/fpm/pool.d/www.conf ~
 cp -rvf config/php-fpm/* /etc/php/5.6/fpm/pool.d/
+sleep 2
 
 # config php
 echo "config php with php-fpm"
@@ -95,3 +106,8 @@ sed -i "s/post_max_size = .*/post_max_size = 50M/" /etc/php/5.6/fpm/php.ini
 echo "........................................config php.ini done"
 echo ""
 sleep 2
+
+# restart service
+/etc/init.d/nginx restart
+/etc/init.d/php5.6-fpm restart
+
